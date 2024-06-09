@@ -4,6 +4,7 @@
     https://devpouch.tistory.com/196
     https://d-e-v.tistory.com/8
     https://zephyrus1111.tistory.com/43
+    https://blog.naver.com/kimzx12/223424163148
 
 # venv
     % /bin/python3 -m venv /media/PROJECT02/project/wordcloud/venv
