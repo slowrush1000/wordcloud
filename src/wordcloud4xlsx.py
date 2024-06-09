@@ -70,6 +70,10 @@ class WordCloud4XLSX:
         #print(f'debug - {titles}')
         for title in self.m_xlsx_datas:
             temp_title  = str(title)
+#            if 'kr' == self.m_lang:
+#                temp_title  = self.ConvertStrOnlyKorean(temp_title)
+#            elif 'persian' == self.m_lang:
+#                temp_title  = self.ConvertStrOnlyPersian(temp_title)
             temp_title   = temp_title.strip()
             temp_title   = temp_title.replace(',', ' ')
             temp_title   = temp_title.replace('.', ' ')
@@ -172,13 +176,20 @@ class WordCloud4XLSX:
         plt.savefig(f'{self.m_output_prefix}.network.png')
         plt.show()
         print(f'# make network end.')
-    def PrepareText(self, text):
+    def ConvertStr(self, text):
         text    = re.sub("[\x00-\x1F\x7F]", "", text)       # 제어문자 [[:cntrl:]]
         text    = re.sub("[\W]", " ", text)                 # 구두점 제거
-        text    = re.sub("[^\u3131-\u3163\uac00-\ud7a3]+", " ", text)  # 한글 이외의 문자 제거
+        #text    = re.sub("[^\u3131-\u3163\uac00-\ud7a3]+", " ", text)  # 한글 이외의 문자 제거
         # text  = re.sub("(Zoom 수업|Zoom수업|줌 수업)", "줌수업", text)         # 2음절 단어
         # text  = re.sub("해지", "취소", text)               # 동음이의어
         return text
+    def ConvertStrOnlyKorean(self, str):
+        text    = re.sub("[\x00-\x1F\x7F]", "", text)       # 제어문자 [[:cntrl:]]
+        text    = re.sub("[\W]", " ", text)                 # 구두점 제거
+        text    = re.sub("[^\u3131-\u3163\uac00-\ud7a3]+", " ", text)  # 한글 이외의 문자 제거
+        return text
+    def ConvertStrOnlyPersian(self, str):
+        return "".join(re.findall(r'[\u0600-\u06FF]+', str))
     def Run(self, args):
         self.ReadArgs(args)
         self.PrintInputs()
